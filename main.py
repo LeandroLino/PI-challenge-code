@@ -1,7 +1,10 @@
-from PI import PI
+#from PI import PI
 from pythonds.basic.deque import Deque
 import math
-import requests
+
+PI = ''
+with open('PI_3.txt', 'r') as file:
+    PI = file.read().replace('\n', '')
 
 def is_palindromes(aString):
     chardeque = Deque()
@@ -28,11 +31,12 @@ def is_prime(seqNum):
 
 def find_palindromes_in_pi(palindromeSize):
     palindrome = ''
-    for _, n in enumerate(PI):
+    print(len(PI))
+    for n in PI[1000000:]:
         if(len(palindrome)==palindromeSize):
             palindrome = palindrome[1:]
             palindrome = palindrome + n
-        elif(len(palindrome)<palindromeSize):
+        elif(len(palindrome)<palindromeSize):   
             palindrome = palindrome + n
 
         if(is_palindromes(palindrome)
