@@ -1,12 +1,8 @@
-#from PI import PI
 from pythonds.basic.deque import Deque
 import math
+import time
 
-PI = ''
-with open('PI_3.txt', 'r') as file:
-    PI = file.read().replace('\n', '')
-
-def is_palindromes(aString):
+def is_palindrome(aString):
     chardeque = Deque()
 
     for ch in aString:
@@ -29,17 +25,30 @@ def is_prime(seqNum):
             return False
     return True
 
+def make_pi():
+    q, r, t, k, m, x = 1, 0, 1, 1, 3, 3
+    xx = 0
+    while True:
+        if 4 * q + r - t < m * t:
+            yield m
+            q, r, t, k, m, x = 10*q, 10*(r-m*t), t, k, (10*(3*q+r))//t - 10*m, x
+        else:
+            q, r, t, k, m, x = q*k, (2*q+r)*x, t*x, k+1, (q*(7*k+2)+r*x)//(t*x), x+2
+        xx+=1
+
+
 def find_palindromes_in_pi(palindromeSize):
     palindrome = ''
-    print(len(PI))
-    for n in PI[1000000:]:
+    pi = make_pi()
+    while True:
+        n = str(next(pi))
         if(len(palindrome)==palindromeSize):
             palindrome = palindrome[1:]
             palindrome = palindrome + n
         elif(len(palindrome)<palindromeSize):   
             palindrome = palindrome + n
 
-        if(is_palindromes(palindrome)
+        if(is_palindrome(palindrome)
         and len(palindrome) == palindromeSize 
         and is_prime(palindrome)
         ):  
@@ -47,5 +56,7 @@ def find_palindromes_in_pi(palindromeSize):
             break
 
 if __name__ == "__main__":
+    inicio = time.time()
     find_palindromes_in_pi(21)
-    #pass
+    fim = time.time()
+    print(fim - inicio)
